@@ -19,17 +19,24 @@
     <!-- Main -->
     <main>
 
+        <div id="loader" class="flex justify-center h-52 hidden">
+            <span class="loading loading-dots loading-lg"></span>
+        </div>
+
         <div id="cards" class="grid grid-cols-3 gap-4 mx-10">
+        </div>
+
+        <div id="show-more" class=" flex justify-center my-5">
+            <button onclick="loadCards(true)" class="btn btn-outline btn-secondary">Show More</button>
         </div>
 
         <!-- Modal -->
 
         <!-- You can open the modal using ID.showModal() method -->
-        <dialog id="cardModal" class="  rounded-lg shadow-md py-4 px-2">
-            <div id="modal" class=" w-11/12 max-w-5xl ">
+        <dialog id="cardModal" class="rounded-lg shadow-md py-10 px-2">
+            <div id="modal" class=" max-w-5xl ">
                 <h3 class="font-bold text-lg">Hello!</h3>
                 <p class="py-4">Click the button below to close</p>
-                
             </div>
         </dialog>
     </main>

@@ -1,11 +1,16 @@
-const loadCards = async () => {
+const loadCards = async (showMore) => {
     const res = await fetch("https://openapi.programming-hero.com/api/ai/tools")
     const data = await res.json();
-    displayCards(data.data.tools);
+    if (showMore) {
+        document.getElementById("show-more").classList.add("hidden")
+        return displayCards(data.data.tools);
+    }
+    displayCards(data.data.tools.splice(0, 6));
 }
 const displayCards = (cards) => {
     const cardsContainer = document.getElementById("cards");
 
+    cardsContainer.innerHTML = ``
     cards.forEach(element => {
 
         const card = document.createElement("div");
@@ -18,7 +23,7 @@ const displayCards = (cards) => {
             featuresList.appendChild(featureItem);
             count++
         });
-        console.log(element);
+        
         card.innerHTML = `
     <div class="card bg-base-100 shadow-xl">
         <figure><img src="${element?.image}" alt="Shoes" /></figure>
@@ -50,7 +55,7 @@ const loadSingleCard = async (id) => {
 }
 
 const displaySingleCard = card => {
-    console.log(card);
+    
     cardModal.showModal();
     const modal = document.getElementById("modal");
     modal.innerHTML = `
@@ -58,16 +63,24 @@ const displaySingleCard = card => {
     <div class="border-2 border-pink-200 bg-pink-50 py-8 px-4">
     <h2 class="font-semibold mb-2">${card?.description}</h2>
     <div class= "grid grid-cols-3 gap-4">
-
+        <p class="text-green-500 py-4 px-2 bg-white">${card?.pricing[0].plan} ${card?.pricing[0].price}</p>
+        <p  class="text-orange-500 py-4 px-2 bg-white">${card?.pricing[1].plan} ${card?.pricing[1].price}</p>
+        <p  class="text-pink-500 py-4 px-2 bg-white">${card?.pricing[2].plan} ${card?.pricing[2].price}</p>
     </div>
-    <h3 class="font-semibold">Features:</h3>
-    <ul>
-
-    </ul>
+    <div class="my-5">
+        <div>   
+            <h3 class="text-xl font-semibold">Features:</h3>
+            <ul class="">
+                <li class="text-sm">${card?.features[1]?.feature_name}</li>
+                <li class="text-sm">${card?.features[2]?.feature_name}</li>
+                <li class="text-sm">${card?.features[3]?.feature_name}</li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <div>
-    <img src="${card?.logo}" alt="">
+    <img src="${card?.image_link[0]}" alt="">
 </div>
     </div>
 <div class="modal-action">
